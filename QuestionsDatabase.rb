@@ -43,8 +43,8 @@ class Question
         @author_id = options['author_id']
     end
 
-    def find_by_id(id)
-        question = QuestionsDatabase.instance.execute(<<-SQL, id)
+    def self.find_by_id(id)
+        question = QuestionsDatabase.instance.execute(<<-SQL, id) 
         SELECT  
             *
         FROM
@@ -52,7 +52,19 @@ class Question
         WHERE
             id = ?;
     SQL
-        Quesiton.new(question.first)
+        Question.new(question.first)
+    end
+
+    def self.find_by_author_id(author_id)
+        question = QuestionsDatabase.instance.execute(<<-SQL, author_id)
+        SELECT
+            *
+        FROM
+            questions
+        WHERE
+            author_id = ?;
+        SQL
+        Question.new(question.first)
     end
 
 end
@@ -66,7 +78,7 @@ class Question_Follow
         @question_id = options['question_id']
     end
 
-    def find_by_id(id)
+    def self.find_by_id(id)
         question_follow = QuestionsDatabase.instance.execute(<<-SQL, id)
         SELECT  
             *
@@ -92,7 +104,7 @@ class Reply
         @body = options['body']
     end
 
-    def find_by_id(id)
+    def self.find_by_id(id)
         reply = QuestionsDatabase.instance.execute(<<-SQL, id)
         SELECT  
             *
@@ -115,7 +127,7 @@ class Question_Like
         @liker = options['liker']
     end
 
-    def find_by_id(id)
+    def self.find_by_id(id)
         question_like = QuestionsDatabase.instance.execute(<<-SQL, id)
         SELECT  
             *
