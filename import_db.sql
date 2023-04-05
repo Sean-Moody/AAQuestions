@@ -74,3 +74,23 @@ INSERT INTO
     questions(id, title, body, author_id)
 VALUES
     (2, 'Who are you?', 'I really do not care', 2);
+
+INSERT INTO
+    question_follows(id, user_id, question_id)
+VALUES
+    (1, 1, 2)
+
+INSERT INTO
+    question_follows(id, user_id, question_id)
+VALUES
+    (2, 2, 1)
+
+INSERT INTO
+    replies(id, question_id, parent_reply_id, reply_author_id, body)
+VALUES
+    (1, 1, 2, 2, 'Yes')
+
+INSERT INTO
+    question_likes(id, liked_question, liker)
+VALUES
+    (1, 1, 2)
