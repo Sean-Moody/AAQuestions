@@ -36,6 +36,13 @@ end
 class Question
     attr_accessor :id, :title, :body, :author_id
 
+    def initialize(options)
+        @id = options['id']
+        @title = options['title']
+        @body = options['body']
+        @author_id = options['author_id']
+    end
+
     def find_by_id(id)
         question = QuestionsDatabase.instance.execute(<<-SQL, id)
         SELECT  
@@ -45,12 +52,19 @@ class Question
         WHERE
             id = ?;
     SQL
+        Quesiton.new(question.first)
     end
 
 end
 
 class Question_Follow
     attr_accessor :id, :user_id, :question_id
+
+    def initialize(options)
+        @id = options['id']
+        @user_id = options['user_id']
+        @question_id = options['question_id']
+    end
 
     def find_by_id(id)
         question_follow = QuestionsDatabase.instance.execute(<<-SQL, id)
@@ -61,6 +75,7 @@ class Question_Follow
         WHERE
             id = ?;
     SQL
+        Question_Follow.new(question_follow.first)
     end
 
 
@@ -68,6 +83,14 @@ end
 
 class Reply
     attr_accessor :id, :question_id, :parent_reply_id, :reply_author_id, :body
+
+    def initialize(options)
+        @id = options['id']
+        @question_id = options['question_id']
+        @parent_reply_id = options['parent_reply_id']
+        @reply_author_id = options['reply_author_id']
+        @body = options['body']
+    end
 
     def find_by_id(id)
         reply = QuestionsDatabase.instance.execute(<<-SQL, id)
@@ -78,12 +101,19 @@ class Reply
         WHERE
             id = ?;
     SQL
+        Reply.new(reply.first)
     end
 
 end
 
 class Question_Like
     attr_accessor :id, :liked_question, :liker
+
+    def initialize(options)
+        @id = options['id']
+        @liked_question = options['liked_question']
+        @liker = options['liker']
+    end
 
     def find_by_id(id)
         question_like = QuestionsDatabase.instance.execute(<<-SQL, id)
@@ -94,6 +124,8 @@ class Question_Like
         WHERE
             id = ?;
     SQL
+
+        Question_Like.new(question_like.first)
     end
 
 end
